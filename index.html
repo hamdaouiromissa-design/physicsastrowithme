@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Untitled</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style.css">
+  </head>
+
+  <body>
+    <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة مادة الفيزياء - الأستاذة حمداوي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #3b82f6;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-light: #4b5563;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f3f4f6;
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+            direction: rtl;
+            text-align: right;
+        }
+
+        #login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-gradient);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .login-box {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            max-width: 440px;
+            width: 90%;
+        }
+
+        .login-box h2 {
+            color: #1e3a8a;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-box p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #d1d5db;
+            border-radius: 10px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            text-align: right;
+            margin-bottom: 1rem;
+            outline: none;
+            box-sizing: border-box;
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1rem;
+            transition: opacity 0.2s;
+        }
+
+        .login-btn:hover {
+            opacity: 0.9;
+        }
+
+        .error-msg {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        #app-content {
+            display: none;
+        }
+
+        header {
+            background: var(--bg-gradient);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .physics-decorations {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            animation: floatIcons 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatIcons {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-8px); }
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        header p {
+            margin-top: 10px;
+            color: #93c5fd;
+            font-size: 1.05rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        #admin-panel {
+            background: #dbeafe;
+            border: 2px dashed var(--primary);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        #admin-panel h3 {
+            color: #1e3a8a;
+            margin-top: 0;
+        }
+
+        .admin-section {
+            background: white;
+            padding: 1.2rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border: 1px solid #bfdbfe;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        #admin-panel input, #admin-panel select, #admin-panel textarea {
+            width: 100%;
+            padding: 0.7rem;
+            margin-bottom: 0.8rem;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-family: 'Cairo', sans-serif;
+            box-sizing: border-box;
+            background: white;
+            outline: none;
+            text-align: right;
+        }
+
+        .student-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f9fafb;
+            padding: 0.5rem 0.8rem;
+            border-radius: 6px;
+            margin-top: 0.4rem;
+            border: 1px solid #e5e7eb;
+            font-size: 0.9rem;
+        }
+
+        .delete-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.3rem 0.7rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Cairo';
+            font-size: 0.8rem;
+        }
+
+        .year-section-title {
+            color: #1e3a8a;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 0.4rem;
+            margin-top: 2.5rem;
+            font-size: 1.5rem;
+        }
+
+        /* تصميم الأيقونات الرئيسية للأقسام (دروس، تمارين، تجارب) */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 15px;
+            margin-top: 1rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+            border: 2px solid #e5e7eb;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .category-card:hover {
+            border-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px rgba(59, 130, 246, 0.1);
+        }
+
+        .category-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .category-card h4 {
+            margin: 0 0 5px 0;
+            color: var(--primary);
+            font-size: 1.15rem;
+        }
+
+        .category-card p {
+            margin: 0;
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        /* صفحات المحتوى المستقلة (الأيقونات الخاصة بالتمارين والدروس) */
+        .sub-page-view {
+            display: none;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .back-btn {
+            background: #64748b;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Cairo';
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .icons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .item-icon-card {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            color: #334155;
+            transition: all 0.2s;
+        }
+
+        .item-icon-card:hover {
+            background: #dbeafe;
+            border-color: #1e3a8a;
+            color: #1e3a8a;
+        }
+
+        .content-display-box {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #fdfdfd;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .action-btn {
+            display: inline-block;
+            background: #10b981;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 0.8rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        video {
+            width: 100%;
+            max-height: 380px;
+            border-radius: 8px;
+            margin-top: 0.8rem;
+            background: #000;
+            outline: none;
+        }
+
+        /* معاينة الصور والملفات مباشرة */
+        .preview-img {
+            max-width: 100%;
+            max-height: 450px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid #cbd5e1;
+            display: block;
+        }
+
+        iframe.preview-pdf {
+            width: 100%;
+            height: 500px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #0f172a;
+            color: #94a3b8;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شاشة تسجيل الدخول -->
+    <div id="login-screen">
+        <div class="login-box">
+            <div style="font-size: 2rem; margin-bottom: 5px;">⚛️ 🧪 ⚡</div>
+            <h2>منصة مادة الفيزياء<br><span style="font-size: 1rem; color: #3b82f6;">الأستاذة حمداوي</span></h2>
+            <p>مرحباً بكِ أستاذة، أدخلي معلومات الدخول الخاصة بك:</p>
+            <input type="text" id="user-email" placeholder="اسم المستخدم...">
+            <input type="password" id="user-pass" placeholder="كلمة السر...">
+            <div id="login-error" class="error-msg">معلومات الدخول غير صحيحة!</div>
+            <button class="login-btn" onclick="login()">تسجيل الدخول</button>
+        </div>
+    </div>
+
+    <!-- المحتوى الرئيسي للمنصة -->
+    <div id="app-content">
+        <header>
+            <div class="physics-decorations">
+                <span>⚛️</span>
+                <span>🧪</span>
+                <span>🧲</span>
+                <span>⚡</span>
+                <span>🔭</span>
+            </div>
+            <h1>مرحباً بك في المنصة التعليمية لمادة الفيزياء</h1>
+            <p>الأستاذة الفاضلة: <strong>حمداوي</strong> | <span id="user-role-badge" style="color: #fbbf24;"></span></p>
+        </header>
+
+        <div class="container">
+            <!-- لوحة تحكم الأدمن -->
+            <div id="admin-panel">
+                <h3>🛠️ لوحة تحكم الأستاذة حمداوي</h3>
+                
+                <div class="admin-section" style="background: #fef9c3; border-color: #fde047;">
+                    <h4 style="color: #854d0e; margin-top: 0;">⚙️ إعدادات الحساب الشخصي:</h4>
+                    <input type="text" id="admin-new-user" placeholder="اسم المستخدم الجديد...">
+                    <input type="password" id="admin-new-pass" placeholder="كلمة السر الجديدة...">
+                    <button class="login-btn" style="background: #eab308; color: #713f12;" onclick="updateAdminCredentials()">حفظ التعديلات</button>
+                </div>
+
+                <div class="admin-section">
+                    <h4 style="color: #1e3a8a; margin-top: 0;">1. إدارة التلاميذ (تبدأ بـ 1s_, 2s_, 3s_ أو 3sc_):</h4>
+                    <input type="text" id="new-student-user" placeholder="مثال: 3sc_fatima (اسم التلميذ)...">
+                    <input type="password" id="new-student-pass" placeholder="كلمة سر التلميذ...">
+                    <button class="login-btn" style="background: #1e3a8a;" onclick="addNewStudent()">إضافة تلميذ جديد</button>
+                    <div style="margin-top: 10px; max-height: 130px; overflow-y: auto;" id="students-list-container"><strong>التلاميذ المسجلون:</strong></div>
+                </div>
+
+                <div class="admin-section">
+                    <h4 style="color: #1e3a8a; margin-top: 0;">2. نشر محتوى فيزيائي (دروس، تمارين، تجارب):</h4>
+                    <label style="font-size: 0.85rem; color: #4b5563;">المستوى الدراسي:</label>
+                    <select id="target-level">
+                        <option value="1st">السنة الأولى ثانوي</option>
+                        <option value="2nd">السنة الثانية ثانوي</option>
+                        <option value="3rd">السنة الثالثة ثانوي عام</option>
+                        <option value="3rd_sci">السنة الثالثة ثانوي - علمي (علوم تجريبية / رياضيات)</option>
+                    </select>
+
+                    <label style="font-size: 0.85rem; color: #4b5563;">القسم:</label>
+                    <select id="target-category">
+                        <option value="lessons">📚 الدروس والوحدات</option>
+                        <option value="exercises">📝 سلاسل التمارين والحلول</option>
+                        <option value="writing">🔬 الأعمال المخبرية والتجارب</option>
+                    </select>
+
+                    <input type="text" id="content-title" placeholder="عنوان المحتوى (مثال: التمرين الأول: المتابعة الزمنية)...">
+                    <textarea id="content-text" rows="3" placeholder="نص الدرس أو الشرح هنا..."></textarea>
+                    
+                    <label style="font-size: 0.85rem; color: #1e3a8a; display: block; margin-top: 5px;">ملف (صورة، PDF) أو فيديو:</label>
+                    <input type="file" id="content-file">
+                    
+                    <button class="login-btn" onclick="publishContent()" style="margin-top: 10px;">نشر وحفظ المحتوى</button>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2 style="color: #1f2937; margin: 0;">الفضاء البيداغوجي لمادة الفيزياء</h2>
+                <button onclick="logout()" style="background: #ef4444; color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; font-family: 'Cairo'; font-size: 0.9rem;">تسجيل الخروج</button>
+            </div>
+
+            <!-- عرض مستويات السنة (على شكل أقسام رئيسية) -->
+            <div id="all-levels-container">
+                <!-- السنة الأولى -->
+                <div id="section-1st-wrapper">
+                    <h3 class="year-section-title">📘 السنة الأولى ثانوي</h3>
+                    <div class="categories-grid">
+                        <div class="category-card" onclick="openSubView('1st', 'lessons')">
+                            <div class="icon">📚</div>
+                            <h4>الدروس والوحدات</h4>
+                            <p>استعراض كافة دروس المقرر</p>
+                        </div>
+                        <div class="category-card" onclick="openSubView('1st', 'exercises')">
+                            <div class="icon">📝</div>
+                            <h4>سلاسل التمارين</h4>
+                            <p>مجموعة من التمارين والحلول المقترحة</p>
+                        </div>
+                        <div class="category-card" onclick="openSubView('1st', 'writing')">
+                            <div class="icon">🔬</div>
+                            <h4>الأعمال المخبرية</h4>
+                            <p>التجارب والشروحات المرئية</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- السنة الثانية -->
+                <div id="section-2nd-wrapper">
+                    <h3 class="year-section-title">📙 السنة الثانية ثانوي</h3>
+                    <div class="categories-grid">
+                        <div class="category-card" onclick="openSubView('2nd', 'lessons')">
+                            <div class="icon">📚</div>
+                            <h4>الدروس والوحدات</h4>
+                            <p>استعراض كافة دروس المقرر</p>
+                        </div>
+                        <div class="category-card" onclick="openSubView('2nd', 'exercises')">
+                            <div class="icon">📝</div>
+                            <h4>سلاسل التمارين</h4>
+                            <p>مجموعة من التمارين والحلول المقترحة</p>
+                        </div>
+                        <div class="category-card" onclick="openSubView('2nd', 'writing')">
+                            <div class="icon">🔬</div>
+                            <h4>الأعمال المخبرية</h4>
+                            <p>التجارب والشروحات المرئية</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- السنة الثالثة عام -->
+                <div id="section-3rd-wrapper">
+                    <h3 class="year-section-title">📗 السنة الثالثة ثانوي (عام)</h3>
+                    <div class="categories-grid">
+                        <div class="category-card" onclick="openSubView('3rd', 'lessons')">
+                            <div class="icon">📚</div>
+                            <h4>الدروس والوحدات</h4>
+                            <p>استعراض كافة دروس المقرر</p>
+                        </div>
+                        <div class="category-card" onclick="openSubView('3rd', 'exercises')">
+                            <div class="icon">📝</div>
+                            <h4>سلاسل التمارين</h4>
+                            <p>مجموعة من التمارين والحلول المقترحة</p>
+                        </div>
+                        <div class="category-card" onclick="openSubView('3rd', 'writing')">
+                            <div class="icon">🔬</div>
+                            <h4>الأعمال المخبرية</h4>
+                            <p>التجارب والشروحات المرئية</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- السنة الثالثة علمي -->
+                <div id="section-3rd-sci-wrapper">
+                    <h3 class="year-section-title" style="border-color: #2563eb;">🔬 السنة الثالثة ثانوي - علمي (علوم تجريبية ورياضيات)</h3>
+                    <div class="categories-grid">
+                        <div class="category-card" onclick="openSubView('3rd_sci', 'lessons')">
+                            <div class="icon">📚</div>
+                            <h4>الوحدات والدروس المفصلة</h4>
+                            <p>دروس التحضير للبكالوريا</p>
+                        </div>
+                        <div class="category-card" onclick="openSubView('3rd_sci', 'exercises')">
+                            <div class="icon">📝</div>
+                            <h4>تمارين البكالوريا والدعم</h4>
+                            <p>سلاسل مكثفة للتدريب</p>
+                        </div>
+                        <div class="category-card" onclick="openSubView('3rd_sci', 'writing')">
+                            <div class="icon">🔬</div>
+                            <h4>التجارب والشروحات المرئية</h4>
+                            <p>تجارب مخبرية مصورة</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- عرض صفحة المحتوى المستقلة للأيقونات -->
+            <div id="sub-page-view" class="sub-page-view">
+                <button class="back-btn" onclick="goBackToMain()">&larr; العودة للقائمة الرئيسية</button>
+                <h3 id="sub-page-title" style="color: #1e3a8a; margin-top:0;"></h3>
+                <div class="icons-grid" id="sub-page-icons-container"></div>
+                <div class="content-display-box" id="sub-page-content-box"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>جميع الحقوق محفوظة &copy; 2026 | الأستاذة حمداوي - مادة الفيزياء</p>
+        </footer>
+    </div>
+
+    <script>
+        let adminAccount = JSON.parse(localStorage.getItem("hamdaoui_arabic_admin")) || { 
+            email: "hamdaoui", 
+            pass: "Hamdaoui@Physics2026!" 
+        };
+        
+        let allowedStudents = JSON.parse(localStorage.getItem("hamdaoui_arabic_students")) || [
+            { email: "1s_student", pass: "1234" },
+            { email: "2s_student", pass: "1234" },
+            { email: "3s_student", pass: "1234" },
+            { email: "3sc_student", pass: "1234" }
+        ];
+
+        let savedContent = JSON.parse(localStorage.getItem("hamdaoui_arabic_content")) || [];
+        let currentLoggedInUser = null;
+
+        window.onload = function() {
+            document.getElementById("admin-new-user").value = adminAccount.email;
+            document.getElementById("admin-new-pass").value = adminAccount.pass;
+        };
+
+        function updateAdminCredentials() {
+            const newUser = document.getElementById("admin-new-user").value.trim();
+            const newPass = document.getElementById("admin-new-pass").value.trim();
+
+            if(newUser === "" || newPass === "") {
+                alert("الرجاء عدم ترك الحقول فارغة!");
+                return;
+            }
+
+            adminAccount = { email: newUser, pass: newPass };
+            localStorage.setItem("hamdaoui_arabic_admin", JSON.stringify(adminAccount));
+            alert("تم تحديث حساب الأستاذة بنجاح!");
+        }
+
+        function renderStudentsList() {
+            const container = document.getElementById("students-list-container");
+            container.innerHTML = "<strong>التلاميذ المسجلون:</strong>";
+            if(allowedStudents.length === 0) {
+                container.innerHTML += "<p style='font-size:0.85rem; color:#6b7280; margin:4px 0;'>لا يوجد تلاميذ مسجلون.</p>";
+                return;
+            }
+            allowedStudents.forEach((s, index) => {
+                const row = document.createElement("div");
+                row.className = "student-item-row";
+                row.innerHTML = `
+                    <span>👤 ${s.email} (كلمة السر: ${s.pass})</span>
+                    <button class="delete-btn" onclick="deleteStudent(${index})">حذف</button>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function addNewStudent() {
+            const username = document.getElementById("new-student-user").value.trim();
+            const pass = document.getElementById("new-student-pass").value.trim();
+
+            if (username === "" || pass === "") {
+                alert("الرجاء إدخال اسم المستخدم وكلمة السر!");
+                return;
+            }
+
+            if (!username.startsWith("1s_") && !username.startsWith("2s_") && !username.startsWith("3s_") && !username.startsWith("3sc_")) {
+                alert("خطأ: يجب أن يبدأ اسم المستخدم بالبادئة الصحيحة للسنة (مثل: 1s_, 2s_, 3s_, 3sc_) !");
+                return;
+            }
+
+            if(allowedStudents.some(s => s.email === username)) {
+                alert("اسم المستخدم هذا موجود مسبقاً!");
+                return;
+            }
+
+            allowedStudents.push({ email: username, pass: pass });
+            localStorage.setItem("hamdaoui_arabic_students", JSON.stringify(allowedStudents));
+            renderStudentsList();
+
+            document.getElementById("new-student-user").value = "";
+            document.getElementById("new-student-pass").value = "";
+            alert("تم إضافة التلميذ بنجاح!");
+        }
+
+        function deleteStudent(index) {
+            if(confirm("هل أنت متأكد من حذف هذا التلميذ؟")) {
+                allowedStudents.splice(index, 1);
+                localStorage.setItem("hamdaoui_arabic_students", JSON.stringify(allowedStudents));
+                renderStudentsList();
+            }
+        }
+
+        function login() {
+            const inputName = document.getElementById("user-email").value.trim();
+            const pass = document.getElementById("user-pass").value.trim();
+            const errorDiv = document.getElementById("login-error");
+
+            if (inputName === adminAccount.email && pass === adminAccount.pass) {
+                currentLoggedInUser = { type: "admin", email: inputName };
+                document.getElementById("login-screen").style.display = "none";
+                document.getElementById("app-content").style.display = "block";
+                document.getElementById("admin-panel").style.display = "block";
+                document.getElementById("user-role-badge").textContent = "أستاذة / المشرفة (حمداوي)";
+                
+                showAllLevelWrappers(true);
+                renderStudentsList();
+            } else {
+                const studentFound = allowedStudents.find(s => s.email === inputName && s.pass === pass);
+                if (studentFound) {
+                    currentLoggedInUser = { type: "student", email: inputName };
+                    document.getElementById("login-screen").style.display = "none";
+                    document.getElementById("app-content").style.display = "block";
+                    document.getElementById("admin-panel").style.display = "none";
+                    
+                    showAllLevelWrappers(false);
+
+                    if (inputName.startsWith("1s_")) {
+                        document.getElementById("user-role-badge").textContent = `تلميذ السنة الأولى (${inputName})`;
+                        document.getElementById("section-1st-wrapper").style.display = "block";
+                    } else if (inputName.startsWith("2s_")) {
+                        document.getElementById("user-role-badge").textContent = `تلميذ السنة الثانية (${inputName})`;
+                        document.getElementById("section-2nd-wrapper").style.display = "block";
+                    } else if (inputName.startsWith("3sc_")) {
+                        document.getElementById("user-role-badge").textContent = `تلميذ السنة الثالثة علمي (${inputName})`;
+                        document.getElementById("section-3rd-sci-wrapper").style.display = "block";
+                    } else if (inputName.startsWith("3s_")) {
+                        document.getElementById("user-role-badge").textContent = `تلميذ السنة الثالثة (${inputName})`;
+                        document.getElementById("section-3rd-wrapper").style.display = "block";
+                    }
+                } else {
+                    errorDiv.style.display = "block";
+                }
+            }
+        }
+
+        function showAllLevelWrappers(show) {
+            const displayVal = show ? "block" : "none";
+            document.getElementById("section-1st-wrapper").style.display = displayVal;
+            document.getElementById("section-2nd-wrapper").style.display = displayVal;
+            document.getElementById("section-3rd-wrapper").style.display = displayVal;
+            document.getElementById("section-3rd-sci-wrapper").style.display = displayVal;
+        }
+
+        function logout() {
+            location.reload();
+        }
+
+        function publishContent() {
+            const level = document.getElementById("target-level").value;
+            const category = document.getElementById("target-category").value;
+            const title = document.getElementById("content-title").value.trim();
+            const textContent = document.getElementById("content-text").value.trim();
+            const fileInput = document.getElementById("content-file");
+            
+            if (title === "") {
+                alert("الرجاء إدخال عنوان المحتوى!");
+                return;
+            }
+
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    saveItemToStorage(level, category, title, textContent, file.name, e.target.result, file.type);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                saveItemToStorage(level, category, title, textContent, null, null, null);
+            }
+        }
+
+        function saveItemToStorage(level, category, title, textContent, fileName, fileData, fileType) {
+            let newItem = {
+                id: Date.now(),
+                level: level,
+                category: category,
+                title: title,
+                text: textContent,
+                fileName: fileName,
+                fileData: fileData,
+                fileType: fileType
+            };
+
+            savedContent.unshift(newItem);
+            localStorage.setItem("hamdaoui_arabic_content", JSON.stringify(savedContent));
+
+            document.getElementById("content-title").value = "";
+            document.getElementById("content-text").value = "";
+            document.getElementById("content-file").value = "";
+            
+            alert("تم نشر المحتوى بنجاح!");
+        }
+
+        function deleteContent(id) {
+            if(confirm("هل أنت متأكد من رغبتك في حذف هذا المحتوى؟")) {
+                savedContent = savedContent.filter(item => item.id !== id);
+                localStorage.setItem("hamdaoui_arabic_content", JSON.stringify(savedContent));
+                document.getElementById("sub-page-content-box").style.display = "none";
+                // إعادة تحميل الصفحة الفرعية لتحديث الأيقونات
+                const activeLevel = window.currentSubLevel;
+                const activeCat = window.currentSubCat;
+                if(activeLevel && activeCat) {
+                    openSubView(activeLevel, activeCat);
+                }
+            }
+        }
+
+        // الانتقال لصفحة الأيقونات المستقلة
+        function openSubView(level, category) {
+            window.currentSubLevel = level;
+            window.currentSubCat = category;
+
+            document.getElementById("all-levels-container").style.display = "none";
+            const subView = document.getElementById("sub-page-view");
+            subView.style.display = "block";
+
+            let catTitleName = "";
+            if(category === 'lessons') catTitleName = "الدروس والوحدات";
+            else if(category === 'exercises') catTitleName = "سلاسل التمارين";
+            else if(category === 'writing') catTitleName = "الأعمال المخبرية والتجارب";
+
+            document.getElementById("sub-page-title").textContent = `📁 قسم: ${catTitleName}`;
+            
+            const container = document.getElementById("sub-page-icons-container");
+            container.innerHTML = "";
+            document.getElementById("sub-page-content-box").style.display = "none";
+
+            const filtered = savedContent.filter(item => item.level === level && item.category === category);
+
+            if(filtered.length === 0) {
+                container.innerHTML = `<p style="grid-column: 1 / -1; text-align: center; color: #6b7280;">لا يوجد محتوى منشور في هذا القسم حالياً.</p>`;
+                return;
+            }
+
+            filtered.forEach(item => {
+                let iconSymbol = category === 'lessons' ? '📚' : (category === 'exercises' ? '📝' : '🔬');
+                const card = document.createElement("div");
+                card.className = "item-icon-card";
+                card.innerHTML = `<div style="font-size: 1.8rem; margin-bottom: 5px;">${iconSymbol}</div><span>${item.title}</span>`;
+                card.onclick = function() {
+                    displayItemContent(item.id);
+                };
+                container.appendChild(card);
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goBackToMain() {
+            document.getElementById("sub-page-view").style.display = "none";
+            document.getElementById("all-levels-container").style.display = "block";
+            window.currentSubLevel = null;
+            window.currentSubCat = null;
+        }
+
+        function displayItemContent(itemId) {
+            const item = savedContent.find(i => i.id == itemId);
+            const box = document.getElementById("sub-page-content-box");
+            if (!item) return;
+
+            let html = `<h4 style="margin-top:0; color:#1e3a8a; font-size: 1.2rem;">📌 ${item.title}</h4>`;
+
+            if (item.text) {
+                html += `<p style="white-space: pre-wrap; font-size: 1rem; line-height: 1.8;">${item.text}</p>`;
+            }
+
+            if (item.fileName && item.fileData) {
+                if (item.fileType && item.fileType.startsWith("video")) {
+                    html += `<p style="font-size: 0.9rem; margin-top: 10px;">🎬 فيديو الشرح: <strong>${item.fileName}</strong></p>
+                             <video controls preload="auto">
+                                 <source src="${item.fileData}" type="${item.fileType}">
+                                 متصفحك لا يدعم تشغيل الفيديو.
+                             </video>
+                             <br>
+                             <a href="${item.fileData}" download="${item.fileName}" class="action-btn" style="background:#3b82f6;">📥 تحميل الفيديو (اختياري)</a>`;
+                } else if (item.fileType && item.fileType.startsWith("image")) {
+                    /* معاينة الصورة مباشرة داخل المنصة بدون الحاجة لتحميلها */
+                    html += `<p style="font-size: 0.9rem; margin-top: 10px;">🖼️️ معاينة الصورة المرفقة:</p>
+                             <img src="${item.fileData}" class="preview-img" alt="${item.fileName}">
+                             <br>
+                             <a href="${item.fileData}" download="${item.fileName}" class="action-btn">📥 تحميل الصورة</a>`;
+                } else if (item.fileType && item.fileType.includes("pdf")) {
+                    /* معاينة ملف الـ PDF مباشرة داخل المنصة */
+                    html += `<p style="font-size: 0.9rem; margin-top: 10px;">📄 معاينة ملف الـ PDF:</p>
+                             <iframe src="${item.fileData}" class="preview-pdf"></iframe>
+                             <br>
+                             <a href="${item.fileData}" download="${item.fileName}" class="action-btn">📥 تحميل الملف الكامل</a>`;
+                } else {
+                    html += `<p style="font-size: 0.9rem; margin-top: 10px;">📁 ملف مرفق: <strong>${item.fileName}</strong></p>
+                             <a href="${item.fileData}" download="${item.fileName}" class="action-btn">📥 تحميل الملف</a>`;
+                }
+            }
+
+            if (currentLoggedInUser && currentLoggedInUser.type === "admin") {
+                html += `<div style="margin-top: 20px; text-align: left; border-top: 1px dashed #cbd5e1; padding-top: 10px;"><button class="delete-btn" onclick="deleteContent(${item.id})">حذف نهائي للمحتوى</button></div>`;
+            }
+
+            box.innerHTML = html;
+            box.style.display = "block";
+            box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    </script>
+</body>
+</html>
+
+    <script src="/script.js"></script>
+  </body>
+
+</html>
